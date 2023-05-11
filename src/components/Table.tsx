@@ -4,8 +4,9 @@ import { Note } from "../interfaces";
 interface Props {
   note: Note[];
   setEditData: (state: Note) => void;
+  deleteNote: (state: number) => void;
 }
-export const Table: FC<Props> = ({ note, setEditData }) => {
+export const Table: FC<Props> = ({ note, setEditData, deleteNote }) => {
   return (
     <table className="table-auto mt-8 w-full">
       <thead className="bg-[#7291A8] text-[#fff]">
@@ -30,7 +31,9 @@ export const Table: FC<Props> = ({ note, setEditData }) => {
                     onClick={() => setEditData(item)}>
                     Update
                   </button>
-                  <button className="bg-[#1E293B] ms-5 px-5 py-1.5 text-[#fff] text-sm rounded-md text-sm">
+                  <button
+                    className="bg-[#1E293B] ms-5 px-5 py-1.5 text-[#fff] text-sm rounded-md text-sm"
+                    onClick={() => deleteNote(item.id!)}>
                     Delete
                   </button>
                 </td>
