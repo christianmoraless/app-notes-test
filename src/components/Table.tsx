@@ -1,11 +1,12 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { Note } from "../interfaces";
 
 interface Props {
-  data: Note[];
+  note: Note[];
 }
-export const Table: FC<Props> = ({ data }) => {
-  console.log();
+export const Table: FC<Props> = ({ note }) => {
+  useEffect(() => {}, []);
+
   return (
     <table className="table-auto">
       <thead>
@@ -13,16 +14,23 @@ export const Table: FC<Props> = ({ data }) => {
           <th>Id</th>
           <th>Title</th>
           <th>Content</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-        {data.map((item, index) => (
-          <tr key={index}>
-            <td>{item.id}</td>
-            <td>{item.title}</td>
-            <td>{item.body}</td>
-          </tr>
-        ))}
+        {note.length === 0
+          ? "No hay data"
+          : note.map((item, key) => (
+              <tr key={key}>
+                <td>{item.id}</td>
+                <td>{item.title}</td>
+                <td>{item.body}</td>
+                <td>
+                  <button>Edit</button>
+                  <button>Delete</button>
+                </td>
+              </tr>
+            ))}
       </tbody>
     </table>
   );

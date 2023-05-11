@@ -1,13 +1,16 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, FC, useState } from "react";
+import { Note } from "../interfaces";
 
 const form = {
-  id: "",
   title: "",
   body: "",
 };
+interface Props {
+  addNote: (note: Note) => void;
+}
 
-export const AddNote = () => {
-  const [formData, setFormData] = useState(form);
+export const AddNote: FC<Props> = ({ addNote }) => {
+  const [formData, setFormData] = useState<Note>(form);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const target = event.target;
@@ -18,7 +21,7 @@ export const AddNote = () => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    localStorage.setItem("notes", JSON.stringify(formData));
+    addNote(formData);
   };
 
   return (
@@ -26,6 +29,10 @@ export const AddNote = () => {
       <div>
         <h3>Add note</h3>
         <form onSubmit={handleSubmit}>
+          <div>
+            <label>Id</label>
+            <input readOnly={true} type="number" name="id" />
+          </div>
           <div>
             <label>Title</label>
             <input
