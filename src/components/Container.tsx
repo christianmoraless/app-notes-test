@@ -4,5 +4,5 @@ interface Props {
   children: React.ReactNode;
 }
 export const Container: FC<Props> = ({ children }) => {
-  return <div className="container">{children}</div>;
+  return <div className="p-10 mx-auto">{children}</div>;
 };
