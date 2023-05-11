@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
-import "./styles/index.css";
 import { Header, AddNote, Container, Table } from "./components";
-
-import { data } from "./data";
 import { Note } from "./interfaces";
+import "./styles/index.css";
 
 function App() {
   const [notes, setNotes] = useState<Note[]>(() => {
@@ -21,10 +19,8 @@ function App() {
   };
 
   const updateNote = (note: Note) => {
-    const newNote = notes.map((el) => {
-      return el.id === note.id ? note : el;
-    });
-    setNotes(newNote);
+    const newNotes = notes.map((el) => (el.id === note.id ? note : el));
+    setNotes(newNotes);
     setEditData(null!);
   };
 
@@ -38,6 +34,21 @@ function App() {
     }
   };
 
+  const sortById = () => {
+    const sort = notes.sort((a, b) => a.id! - b.id!);
+    setNotes(sort);
+  };
+
+  const sortByTitle = () => {
+    const sort = notes.sort((a, b) => a.title.localeCompare(b.title));
+    setNotes(sort);
+  };
+
+  const sortByContent = () => {
+    const sort = notes.sort((a, b) => a.body.localeCompare(b.body));
+    setNotes(sort);
+  };
+
   useEffect(() => {
     window.localStorage.setItem("notesData", JSON.stringify(notes));
   }, [notes]);
@@ -48,10 +59,17 @@ function App() {
       <Container>
         <AddNote
           addNote={addNote}
-          editData={editData!}
+          editData={editData}
           updateNote={updateNote}
         />
-        <Table note={notes} setEditData={setEditData} deleteNote={deleteNote} />
+        <Table
+          note={notes}
+          setEditData={setEditData}
+          deleteNote={deleteNote}
+          sortById={sortById}
+          sortByTitle={sortByTitle}
+          sortByContent={sortByContent}
+        />
       </Container>
     </React.Fragment>
   );

@@ -35,8 +35,9 @@ export const AddNote: FC<Props> = ({ addNote, editData, updateNote }) => {
           id: null!,
         });
       }
+    } else {
+      alert("Please fill out the fields");
     }
-    addNote(formData);
   };
 
   useEffect(() => {
